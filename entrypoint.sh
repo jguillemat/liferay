@@ -8,13 +8,11 @@ main() {
   show_motd
   prepare_liferay_portal_properties
   prepare_liferay_tomcat_config
-  prepare_liferay_osgi_configs_directory
   run_portal "$@"
 }
 
 show_motd() {
   echo "Starting Liferay 7.1 instance.
-
   LIFERAY_HOME: $LIFERAY_HOME
   "
 }
@@ -43,21 +41,17 @@ prepare_liferay_portal_properties() {
 }
 
 prepare_liferay_tomcat_config() {
-  if [[ ! -f "$LIFERAY_CONFIG_DIR/setenv.sh" ]]; then
-    echo "No 'configs/setenv.sh' file found.
-  If you wish to provide custom tomcat JVM settings, make sure
-  you include a 'configs/setenv.sh' file in the 
-  root of your project.
-
-  Continuing.
-  "
-    return 0
-  fi
-
-  echo "Tomcat configuration (setenv.sh) file found.
+  
+  echo "
+   Configuring server.xml....
   "
 
-  cp -r $LIFERAY_CONFIG_DIR/setenv.sh $CATALINA_HOME/bin/setenv.sh
+  sed -i '/POSTGRESQL_USERNAME/$POSTGRESQL_USERNAME/g' /tmp/server.xml_template
+  sed -i '/POSTGRESQL_PASSWORD/$POSTGRESQL_PASSWORD/g' /tmp/server.xml_template
+  sed -i '/POSTGRESQL_URL/$POSTGRESQL_URL/g' /tmp/server.xml_template
+
+  rm $CATALINA_HOME/conf/server.xml
+  cp /tmp/server.xml_template  $CATALINA_HOME/conf/server.xml
 
   echo "
   Continuing.
