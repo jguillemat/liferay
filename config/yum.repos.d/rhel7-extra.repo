@@ -1,0 +1,7 @@
+[rhel-7-extra]
+name=My Red Hat Enterprise Linux $releasever - Extra Packages
+baseurl=http://repo.inti.com/rhel-7-extra
+enabled=1
+gpgcheck=0
+proxy=_none_
+

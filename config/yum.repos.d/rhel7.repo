@@ -1,0 +1,8 @@
+[rhel-7-x86]
+name=My Red Hat Enterprise Linux $releasever - $basearch
+baseurl=http://repo.inti.com/rhel7
+enabled=1
+gpgcheck=0
+exclude=postgresql*
+proxy=_none_
+
