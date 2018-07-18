@@ -10,8 +10,9 @@ ENV PATH=$CATALINA_HOME/bin:$PATH
 
 USER root
 
-RUN yum -y install telnet && yum clean all -y && \
-	useradd -ms /bin/bash liferay && \
+RUN yum -y install telnet && yum clean all -y
+
+RUN useradd -ms /bin/bash liferay && \
 	set -x && \
 	mkdir -p $LIFERAY_HOME && \
 	curl -fSL "$LIFERAY_TOMCAT_URL" -o liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip && \
