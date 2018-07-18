@@ -20,8 +20,7 @@ COPY ./config/yum.repos.d/* /etc/yum.repos.d/
 COPY ./config/default_locale /etc/default/locale
 COPY ./config/default_bash_profile /tmp/default_bash_profile
 
-RUN yum update -y \ 
-	&& yum install -y \
+RUN yum install -y \
 		unzip \
 		curl \
 		telnet \
