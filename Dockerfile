@@ -10,7 +10,7 @@ ENV PATH=$CATALINA_HOME/bin:$PATH
 
 USER root
 
-RUN yum -y install telnet && yum -y install myotherpackage && yum clean all -y && \
+RUN yum -y install telnet && yum clean all -y && \
 	useradd -ms /bin/bash liferay && \
 	set -x && \
 	mkdir -p $LIFERAY_HOME && \
