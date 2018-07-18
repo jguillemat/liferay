@@ -8,6 +8,8 @@ ENV LIFERAY_TOMCAT_URL=https://cdn.lfrs.sl/releases.liferay.com/portal/7.1.0-ga1
 ENV CATALINA_HOME=$LIFERAY_HOME/tomcat-8.0.32
 ENV PATH=$CATALINA_HOME/bin:$PATH
 
+USER root
+
 RUN yum -y install telnet && yum -y install myotherpackage && yum clean all -y && \
 	useradd -ms /bin/bash liferay && \
 	set -x && \
