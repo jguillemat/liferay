@@ -5,7 +5,7 @@ WORKDIR /usr/local
 
 ENV LIFERAY_HOME=/usr/local//liferay-ce-portal-7.1.0-ga1/
 ENV LIFERAY_TOMCAT_URL=https://cdn.lfrs.sl/releases.liferay.com/portal/7.1.0-ga1/liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip
-ENV CATALINA_HOME=$LIFERAY_HOME/tomcat-8.0.32
+ENV CATALINA_HOME=$LIFERAY_HOME/tomcat-9.0.6
 ENV PATH=$CATALINA_HOME/bin:$PATH
 
 # DEV
