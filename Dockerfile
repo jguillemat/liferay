@@ -20,11 +20,11 @@ COPY ./config/yum.repos.d/* /etc/yum.repos.d/
 COPY ./config/default_locale /etc/default/locale
 COPY ./config/default_bash_profile /tmp/default_bash_profile
 
-RUN yum install -y \
-		unzip \
-		curl \
-		telnet \
-	&& yum -y clean all 
+# RUN yum install -y \
+# 		unzip \
+# 		curl \
+# 		telnet \
+# 	&& yum -y clean all 
 
 RUN useradd -ms /bin/bash liferay && \
 	set -x && \
