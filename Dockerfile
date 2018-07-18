@@ -10,7 +10,20 @@ ENV PATH=$CATALINA_HOME/bin:$PATH
 
 USER root
 
-RUN yum -y install telnet && yum clean all -y
+COPY ./config/yum.conf /etc/
+COPY ./config/yum.repos.d/* /etc/yum.repos.d/
+COPY ./config/default_locale /etc/default/locale
+COPY ./config/default_bash_profile /tmp/default_bash_profile
+
+RUN yum update -y \ 
+	&& yum install -y \
+        	unzip \
+        	psmisc \
+        	vim \
+        	binutils \
+        	telnet \
+        	sysstat \
+	&& yum -y clean all 
 
 RUN useradd -ms /bin/bash liferay && \
 	set -x && \
