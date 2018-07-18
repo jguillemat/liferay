@@ -22,9 +22,9 @@ COPY ./config/default_bash_profile /tmp/default_bash_profile
 
 RUN yum update -y \ 
 	&& yum install -y \
-        	unzip \
-        	curl \
-        	telnet \
+		unzip \
+		curl \
+		telnet \
 	&& yum -y clean all 
 
 RUN useradd -ms /bin/bash liferay && \
