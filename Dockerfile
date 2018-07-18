@@ -29,7 +29,7 @@ COPY ./config/default_bash_profile /tmp/default_bash_profile
 RUN useradd -ms /bin/bash liferay && \
 	set -x && \
 	mkdir -p $LIFERAY_HOME \
-	curl "$LIFERAY_TOMCAT_URL" -o liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip && \
+	curl "$LIFERAY_TOMCAT_URL" --output liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip && \
 	unzip liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip && \
 	rm liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip && \
 	rm -rf $CATALINA_HOME/work/* && \
