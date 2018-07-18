@@ -3,7 +3,7 @@ LABEL maintainer="Ancert Sistemas"
 
 WORKDIR /usr/local
 
-ENV LIFERAY_HOME=/usr/local/liferay-ce-portal-7.1
+ENV LIFERAY_HOME=/usr/local//liferay-ce-portal-7.1.0-ga1/
 ENV LIFERAY_TOMCAT_URL=https://cdn.lfrs.sl/releases.liferay.com/portal/7.1.0-ga1/liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip
 ENV CATALINA_HOME=$LIFERAY_HOME/tomcat-8.0.32
 ENV PATH=$CATALINA_HOME/bin:$PATH
@@ -29,7 +29,7 @@ RUN yum update -y \
 
 RUN useradd -ms /bin/bash liferay && \
 	set -x && \
-	mkdir -p $LIFERAY_HOME && cd $LIFERAY_HOME \
+	mkdir -p $LIFERAY_HOME \
 	curl -fSL "$LIFERAY_TOMCAT_URL" -o liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip && \
 	unzip liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip && \
 	rm liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip && \
