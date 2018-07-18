@@ -7,6 +7,7 @@ WORKDIR /usr/local
 
 ENV LIFERAY_HOME=/usr/local//liferay-ce-portal-7.1.0-ga1/
 ENV LIFERAY_TOMCAT_URL=https://cdn.lfrs.sl/releases.liferay.com/portal/7.1.0-ga1/liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip
+ENV LIFERAY_SHARED=/storage/liferay
 ENV LIFERAY_CONFIG_DIR=/tmp/liferay/configs
 ENV LIFERAY_DEPLOY_DIR=/tmp/liferay/deploy
 ENV CATALINA_HOME=$LIFERAY_HOME/tomcat-9.0.6
@@ -36,13 +37,15 @@ RUN useradd -ms /bin/bash liferay && \
 	curl "$LIFERAY_TOMCAT_URL" --output liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip && \
 	unzip liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip && \
 	rm liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip && \
+	rm -rf $CATALINA_HOME/temp/* && \
 	rm -rf $CATALINA_HOME/work/* && \
 	mkdir -p $LIFERAY_HOME/data/document_library && \
-	mkdir -p $LIFERAY_HOME/data/elasticsearch/indices
+	mkdir -p $LIFERAY_HOME/data/elasticsearch6/indices
 	
 RUN mkdir -p /tmp/themes && chown -R liferay:liferay /tmp/themes
 
 COPY ./config/setenv.sh $CATALINA_HOME/bin/setenv.sh
+COPY server.xml_template /tmp/server.xml_template
 
 RUN chown -R liferay:liferay $LIFERAY_HOME
 
