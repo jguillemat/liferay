@@ -46,10 +46,10 @@ prepare_liferay_tomcat_config() {
    Configuring server.xml....
   "
 
-  sed -i '/POSTGRESQL_USERNAME/$POSTGRESQL_USERNAME/g' /tmp/server.xml_template
-  sed -i '/POSTGRESQL_PASSWORD/$POSTGRESQL_PASSWORD/g' /tmp/server.xml_template
-  sed -i '/POSTGRESQL_URL/$POSTGRESQL_URL/g' /tmp/server.xml_template
-
+  sed -i 's/POSTGRESQL_USERNAME/$POSTGRESQL_USERNAME/g' /tmp/server.xml_template
+  sed -i 's/POSTGRESQL_PASSWORD/$POSTGRESQL_PASSWORD/g' /tmp/server.xml_template
+  sed -i 's/POSTGRESQL_URL/$POSTGRESQL_URL/g' /tmp/server.xml_template
+  
   mv /tmp/server.xml_template  $CATALINA_HOME/conf/server.xml
 
   echo "
