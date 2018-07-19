@@ -28,7 +28,8 @@ USER root
 # 		telnet \
 # 	&& yum -y clean all 
 
-RUN useradd -ms /bin/bash liferay && \
+RUN groupadd -g 1111 -r liferay && \
+	useradd -g liferay -ms /bin/bash -u 1111 liferay && \
 	set -x && \
 	mkdir -p $LIFERAY_HOME && \
 	curl "$LIFERAY_TOMCAT_URL" --output liferay-ce-portal-tomcat-7.1.0-ga1-20180703012531655.zip && \
@@ -45,11 +46,12 @@ COPY ./config/setenv.sh $CATALINA_HOME/bin/setenv.sh
 COPY server.xml_template $LIFERAY_HOME/server.xml_template
 COPY ./run-liferay.sh /usr/local/bin
 
-RUN chown -R liferay:liferay $LIFERAY_HOME
+RUN chown -R liferay:liferay $LIFERAY_HOME /usr/local/bin/run-liferay.sh
 RUN chmod +x /usr/local/bin/run-liferay.sh
 RUN chmod +x $CATALINA_HOME/bin/catalina.sh
+RUN chmod 744 $LIFERAY_HOME/server.xml_template
 
-USER liferay
+USER 1111
 
 # NORMAL mode
 EXPOSE 8080/tcp
