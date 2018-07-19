@@ -99,7 +99,7 @@ prepare_liferay_tomcat_config() {
    Configuring Tomcat server.xml ...
   "
 
-  if [ -v POSTGRESQL_URL |; then
+  if [ -v POSTGRESQL_URL ]; then
 	  POSTGRESQL_URL="jdbc:postgresql://$POSTGRESQL_SERVICE_HOST:$POSTGRESQL_SERVICE_PORT/$POSTGRESQL_DATABASE"
   fi
 
