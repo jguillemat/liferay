@@ -15,10 +15,8 @@ main() {
 show_motd() {
   echo "Starting Liferay 7.1 instance.
   LIFERAY_HOME: $LIFERAY_HOME
-  LIFERAY_HOME: $LIFERAY_HOME
-  LIFERAY_HOME: $LIFERAY_HOME
-  LIFERAY_HOME: $LIFERAY_HOME
-
+  POSTGRESQL_USER: $POSTGRESQL_USER
+  runAS: `id -u`
   "
 }
 
