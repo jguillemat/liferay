@@ -103,11 +103,11 @@ prepare_liferay_tomcat_config() {
 	  POSTGRESQL_URL="jdbc:postgresql://$POSTGRESQL_SERVICE_HOST:$POSTGRESQL_SERVICE_PORT/$POSTGRESQL_DATABASE"
   fi
 
-  sed -i 's/POSTGRESQL_USERNAME/$POSTGRESQL_USERNAME/g' $LIFERAY_HOME/server.xml_template
-  sed -i 's/POSTGRESQL_PASSWORD/$POSTGRESQL_PASSWORD/g' $LIFERAY_HOME/server.xml_template
-  sed -i 's/POSTGRESQL_URL/$POSTGRESQL_URL/g' $LIFERAY_HOME/server.xml_template
+  sed -i 's/POSTGRESQL_USERNAME/'"$POSTGRESQL_USERNAME"'/g' $LIFERAY_HOME/server.xml_template
+  sed -i 's/POSTGRESQL_PASSWORD/'"$POSTGRESQL_PASSWORD"'/g' $LIFERAY_HOME/server.xml_template
+  sed -i 's/POSTGRESQL_URL/'"$POSTGRESQL_URL"'/g' $LIFERAY_HOME/server.xml_template
 
-  mv $LIFERAY_HOME/server.xml_template  $CATALINA_HOME/conf/server.xml
+  cp $LIFERAY_HOME/server.xml_template  $CATALINA_HOME/conf/server.xml
 
   echo "
   Continuing.
