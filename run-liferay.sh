@@ -43,7 +43,7 @@ EOF
 
 function check_env_vars() {
 
-  if [[ -v POSTGRESQL_USER || -v POSTGRESQL_PASSWORD || -v POSTGRESQL_SERVICE_HOST || -v POSTGRESQL_SERVICE_PORT || -v POSTGRESQL_DATABASE]]; then
+  if [[ -v POSTGRESQL_USER || -v POSTGRESQL_PASSWORD || -v POSTGRESQL_SERVICE_HOST || -v POSTGRESQL_SERVICE_PORT || -v POSTGRESQL_DATABASE ]]; then
     # one var means all three must be specified
     [[ -v POSTGRESQL_USER && -v POSTGRESQL_PASSWORD ]] || usage
     [[ "$POSTGRESQL_USER"     =~ $psql_identifier_regex ]] || usage
