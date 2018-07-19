@@ -15,10 +15,8 @@ main() {
 show_motd() {
   echo "Starting Liferay 7.1 instance.
   LIFERAY_HOME: $LIFERAY_HOME
-  LIFERAY_HOME: $LIFERAY_HOME
-  LIFERAY_HOME: $LIFERAY_HOME
-  LIFERAY_HOME: $LIFERAY_HOME
-
+  POSTGRESQL_USER: $POSTGRESQL_USER
+  runAS: `id -u`
   "
 }
 
@@ -74,11 +72,10 @@ prepare_liferay_portal_properties() {
   fi
 
   echo "Portal properties (portal-ext.properties) file found."
-  "
+
   cp -r $LIFERAY_CONFIG_DIR/portal-ext.properties $LIFERAY_HOME/portal-ext.properties
-  echo "
-  Continuing.
-  "
+
+  echo " Continuing."
 }
 
 prepare_liferay_tomcat_config() {
