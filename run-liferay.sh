@@ -15,8 +15,10 @@ main() {
 show_motd() {
   echo "Starting Liferay 7.1 instance.
   LIFERAY_HOME: $LIFERAY_HOME
-  POSTGRESQL_USER: $POSTGRESQL_USER
-  runAS: `id -u`
+  LIFERAY_HOME: $LIFERAY_HOME
+  LIFERAY_HOME: $LIFERAY_HOME
+  LIFERAY_HOME: $LIFERAY_HOME
+
   "
 }
 
@@ -60,6 +62,7 @@ function check_env_vars() {
 
 prepare_liferay_portal_properties() {
   if [[ ! -f "$LIFERAY_CONFIG_DIR/portal-ext.properties" ]]; then
+
     echo "No 'configs/portal-ext.properties' file found.
   If you wish to use a custom properties file make sure
   you include a 'configs/portal-ext.properties' file in the 
@@ -70,11 +73,9 @@ prepare_liferay_portal_properties() {
     return 0
   fi
 
-  echo "Portal properties (portal-ext.properties) file found.
+  echo "Portal properties (portal-ext.properties) file found."
   "
-
   cp -r $LIFERAY_CONFIG_DIR/portal-ext.properties $LIFERAY_HOME/portal-ext.properties
-
   echo "
   Continuing.
   "
