@@ -52,17 +52,6 @@ function check_env_vars() {
     postinitdb_actions+=",simple_db"
   fi
 
-  if [[ -v POSTGRESQL_USER || -v POSTGRESQL_PASSWORD || -v POSTGRESQL_URL ]]; then
-    # one var means all three must be specified
-    [[ -v POSTGRESQL_USER && -v POSTGRESQL_PASSWORD ]] || usage
-    [[ "$POSTGRESQL_USER"     =~ $psql_identifier_regex ]] || usage
-    [[ "$POSTGRESQL_PASSWORD" =~ $psql_password_regex   ]] || usage
-
-    [ ${#POSTGRESQL_USER} -le 63 ] || usage "PostgreSQL username too long (maximum 63 characters)"
-    postinitdb_actions+=",simple_db"
-  fi
-
-
   case "$postinitdb_actions" in
     ,simple_db,admin_pass) ;;
     ,migration|,simple_db|,admin_pass) ;;
@@ -103,7 +92,7 @@ prepare_liferay_tomcat_config() {
 	  POSTGRESQL_URL="jdbc:postgresql://$POSTGRESQL_SERVICE_HOST:$POSTGRESQL_SERVICE_PORT/$POSTGRESQL_DATABASE"
   fi
 
-  sed -i 's/POSTGRESQL_USERNAME/'"$POSTGRESQL_USERNAME"'/g' $LIFERAY_HOME/server.xml_template
+  sed -i 's/POSTGRESQL_USER/'"$POSTGRESQL_USER"'/g' $LIFERAY_HOME/server.xml_template
   sed -i 's/POSTGRESQL_PASSWORD/'"$POSTGRESQL_PASSWORD"'/g' $LIFERAY_HOME/server.xml_template
   sed -i 's/POSTGRESQL_URL/'"$POSTGRESQL_URL"'/g' $LIFERAY_HOME/server.xml_template
 
