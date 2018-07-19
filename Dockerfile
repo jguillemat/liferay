@@ -20,11 +20,8 @@ ENV JPDA_ADDRESS=8000
 
 USER root
 
-COPY ./config/yum.conf /etc/
-COPY ./config/yum.repos.d/* /etc/yum.repos.d/
-COPY ./config/default_locale /etc/default/locale
-COPY ./config/default_bash_profile /tmp/default_bash_profile
-
+# COPY ./config/yum.conf /etc/
+# COPY ./config/yum.repos.d/* /etc/yum.repos.d/
 # RUN yum install -y \
 # 		unzip \
 # 		curl \
@@ -42,15 +39,14 @@ RUN useradd -ms /bin/bash liferay && \
 	mkdir -p $LIFERAY_HOME/data/document_library && \
 	mkdir -p $LIFERAY_HOME/data/elasticsearch6/indices
 	
-RUN mkdir -p /tmp/themes && chown -R liferay:liferay /tmp/themes
-
+COPY ./config/default_locale /etc/default/locale
+COPY ./config/default_bash_profile /tmp/default_bash_profile
 COPY ./config/setenv.sh $CATALINA_HOME/bin/setenv.sh
-COPY server.xml_template /tmp/server.xml_template
+COPY server.xml_template $LIFERAY_HOME/server.xml_template
+COPY ./run-liferay.sh /usr/local/bin
 
 RUN chown -R liferay:liferay $LIFERAY_HOME
-
-COPY ./entrypoint.sh /usr/local/bin
-RUN chmod +x /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/run-liferay.sh
 RUN chmod +x $CATALINA_HOME/bin/catalina.sh
 
 USER liferay
@@ -61,8 +57,7 @@ EXPOSE 9000/tcp
 # ENTRYPOINT ["catalina.sh", "run"]
 
 # Custom Entrypoint
-ENTRYPOINT ["entrypoint.sh"]
-CMD ["catalina.sh", "run"]
+ENTRYPOINT ["run-liferay.sh"]
 
 # DEBUG mode
 # EXPOSE 11311/tcp
