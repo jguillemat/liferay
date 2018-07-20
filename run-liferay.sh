@@ -57,21 +57,13 @@ function check_env_vars() {
 
 
 function prepare_liferay_portal_properties() {
-  if [[ ! -f "$LIFERAY_TEMPORAL_DIR/portal-ext.properties" ]]; then
 
-    echo "No 'configs/portal-ext.properties' file found.
-  If you wish to use a custom properties file make sure
-  you include a 'configs/portal-ext.properties' file in the 
-  root of your project.
-
-  Continuing.
-  "
-    return 0
+  if [[  -f "$LIFERAY_TEMPORAL_DIR/portal-ext.properties" ]]; then
+	  echo "Portal properties (portal-ext.properties) file found."
+	  cp -r $LIFERAY_TEMPORAL_DIR/portal-ext.properties $LIFERAY_HOME/portal-ext.properties
   fi
 
-  echo "Portal properties (portal-ext.properties) file found."
 
-  cp -r $LIFERAY_TEMPORAL_DIR/portal-ext.properties $LIFERAY_HOME/portal-ext.properties
 
   echo " Continuing."
 }
@@ -88,6 +80,32 @@ function prepare_liferay_tomcat_config() {
   sed -i 's/POSTGRESQL_SERVICE_PORT/'"$POSTGRESQL_SERVICE_PORT"'/g' $CATALINA_HOME/conf/server.xml
   sed -i 's/POSTGRESQL_DATABASE/'"$POSTGRESQL_DATABASE"'/g' $CATALINA_HOME/conf/server.xml
 
+  if [[  -f "$LIFERAY_TEMPORAL_DIR/setenv.sh" ]]; then
+	  echo "Temporal Tomcat setenv.sh found."
+	  cp -r $LIFERAY_TEMPORAL_DIR/setenv.sh $CATALINA_HOME/bin/setenv.sh
+  fi
+
+
+  if [[  -f "$LIFERAY_TEMPORAL_DIR/logging.properties" ]]; then
+	  echo "Temporal Tomcat logging properties file found."
+	  cp -r $LIFERAY_TEMPORAL_DIR/logging.properties $CATALINA_HOME/conf/logging.properties
+  fi
+
+  if [[  -f "$LIFERAY_TEMPORAL_DIR/context.xml" ]]; then
+	  echo "Temporal Tomcat context.xml found."
+	  cp -r $LIFERAY_TEMPORAL_DIR/context.xml $CATALINA_HOME/conf/context.xml
+  fi
+
+  if [[  -f "$LIFERAY_TEMPORAL_DIR/server.xml" ]]; then
+	  echo "Temporal Tomcat server.xml found."
+	  cp -r $LIFERAY_TEMPORAL_DIR/server.xml $CATALINA_HOME/conf/server.xml
+  fi
+
+  if [[  -f "$LIFERAY_TEMPORAL_DIR/tomcat-users.xml" ]]; then
+	  echo "Temporal Tomcat tomcat-users.xml found."
+	  cp -r $LIFERAY_TEMPORAL_DIR/tomcat-users.xml $CATALINA_HOME/conf/tomcat-users.xml
+  fi
+
   echo "Continuing."
 }
 
@@ -101,7 +119,7 @@ function prepare_liferay_persistent_data_dirs() {
     rsync -a --ignore-existing /tmp/data/* $LIFERAY_HOME/data/
   fi
 
-  if [[ ! -f "$LIFERAY_HOME/osgi/hypersonic" ]]; then
+  if [[ ! -f "$LIFERAY_HOME/osgi/configs" ]]; then
     echo "No data in $LIFERAY_HOME/osgi'  found. Iniitalitzating osgi..." 
     rsync -a --ignore-existing /tmp/osgi/* $LIFERAY_HOME/osgi/
   fi
@@ -120,6 +138,4 @@ function run_portal() {
 }
 
 main "$@"
-
-
 
