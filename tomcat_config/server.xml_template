@@ -40,6 +40,7 @@
               factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
               pathname="conf/tomcat-users.xml" />
 
+    <!-- ANCERT Added -->
     <Resource name="jdbc/LiferayPool"
           auth="Container"
           type="javax.sql.DataSource"
@@ -72,8 +73,8 @@
                connectionTimeout="20000"
                redirectPort="8443" URIEncoding="UTF-8" />
 
-    <!-- Define an AJP 1.3 Connector on port 8009 -->
-    <Connector port="8009" protocol="AJP/1.3" redirectPort="8443" URIEncoding="UTF-8" />
+    <Connector port="8009" protocol="AJP/1.3" 
+		redirectPort="8443" URIEncoding="UTF-8" />
 
     <Engine name="Catalina" defaultHost="localhost">
  
