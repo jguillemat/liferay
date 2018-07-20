@@ -61,7 +61,7 @@ function prepare_liferay_portal_properties() {
   if [[  -f "$LIFERAY_TEMPORAL_DIR/portal-ext.properties" ]]; then
 	  echo "Portal properties (portal-ext.properties) file found."
 
-	  cp -l $LIFERAY_TEMPORAL_DIR/portal-ext.properties $LIFERAY_HOME/portal-ext.properties
+	  cp -s $LIFERAY_TEMPORAL_DIR/portal-ext.properties $LIFERAY_HOME/portal-ext.properties
   fi
 
   echo " Continuing."
@@ -81,28 +81,28 @@ function prepare_liferay_tomcat_config() {
 
   if [[  -f "$LIFERAY_TEMPORAL_DIR/setenv.sh" ]]; then
 	  echo "Temporal Tomcat setenv.sh found."
-	  cp -l $LIFERAY_TEMPORAL_DIR/setenv.sh $CATALINA_HOME/bin/setenv.sh
+	  cp -s $LIFERAY_TEMPORAL_DIR/setenv.sh $CATALINA_HOME/bin/setenv.sh
   fi
 
 
   if [[  -f "$LIFERAY_TEMPORAL_DIR/logging.properties" ]]; then
 	  echo "Temporal Tomcat logging properties file found."
-	  cp -l $LIFERAY_TEMPORAL_DIR/logging.properties $CATALINA_HOME/conf/logging.properties
+	  cp -s $LIFERAY_TEMPORAL_DIR/logging.properties $CATALINA_HOME/conf/logging.properties
   fi
 
   if [[  -f "$LIFERAY_TEMPORAL_DIR/context.xml" ]]; then
 	  echo "Temporal Tomcat context.xml found."
-	  cp -l $LIFERAY_TEMPORAL_DIR/context.xml $CATALINA_HOME/conf/context.xml
+	  cp -s $LIFERAY_TEMPORAL_DIR/context.xml $CATALINA_HOME/conf/context.xml
   fi
 
   if [[  -f "$LIFERAY_TEMPORAL_DIR/server.xml" ]]; then
 	  echo "Temporal Tomcat server.xml found."
-	  cp -l $LIFERAY_TEMPORAL_DIR/server.xml $CATALINA_HOME/conf/server.xml
+	  cp -s $LIFERAY_TEMPORAL_DIR/server.xml $CATALINA_HOME/conf/server.xml
   fi
 
   if [[  -f "$LIFERAY_TEMPORAL_DIR/tomcat-users.xml" ]]; then
 	  echo "Temporal Tomcat tomcat-users.xml found."
-	  cp -l $LIFERAY_TEMPORAL_DIR/tomcat-users.xml $CATALINA_HOME/conf/tomcat-users.xml
+	  cp -s $LIFERAY_TEMPORAL_DIR/tomcat-users.xml $CATALINA_HOME/conf/tomcat-users.xml
   fi
 
   echo "Continuing."
