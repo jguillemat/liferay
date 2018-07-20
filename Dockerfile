@@ -45,6 +45,8 @@ RUN groupadd -g 1111 -r liferay && \
 COPY ./config/default_locale /etc/default/locale
 COPY ./config/default_bash_profile /tmp/default_bash_profile
 COPY ./tomcat_config/setenv.sh $CATALINA_HOME/bin/setenv.sh
+COPY ./tomcat_config/context.xml $CATALINA_HOME/conf/context.xml
+COPY ./tomcat_config/logging.properties $CATALINA_HOME/conf/logging.properties
 COPY ./tomcat_config/server.xml_template $LIFERAY_HOME/server.xml_template
 COPY ./run-liferay.sh /usr/local/bin
 
