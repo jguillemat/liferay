@@ -7,12 +7,13 @@ set -o errexit
 main() {
   check_env_vars
   show_motd
+  prepare_liferay_persistent_data_dirs
   prepare_liferay_portal_properties
   prepare_liferay_tomcat_config
   run_portal "$@"
 }
 
-show_motd() {
+function show_motd() {
   echo "Starting Liferay 7.1 instance.
   LIFERAY_HOME: $LIFERAY_HOME
   POSTGRESQL_USER: $POSTGRESQL_USER
@@ -49,19 +50,14 @@ function check_env_vars() {
     [[ "$POSTGRESQL_USER"     =~ $psql_identifier_regex ]] || usage
     [[ "$POSTGRESQL_PASSWORD" =~ $psql_password_regex   ]] || usage
     [ ${#POSTGRESQL_USER} -le 63 ] || usage "PostgreSQL username too long (maximum 63 characters)"
-    postinitdb_actions+=",simple_db"
-  fi
 
-  case "$postinitdb_actions" in
-    ,simple_db,admin_pass) ;;
-    ,migration|,simple_db|,admin_pass) ;;
-    *) usage ;;
-  esac
+  fi
+ 
 }
 
 
-prepare_liferay_portal_properties() {
-  if [[ ! -f "$LIFERAY_CONFIG_DIR/portal-ext.properties" ]]; then
+function prepare_liferay_portal_properties() {
+  if [[ ! -f "$LIFERAY_TEMPORAL_DIR/portal-ext.properties" ]]; then
 
     echo "No 'configs/portal-ext.properties' file found.
   If you wish to use a custom properties file make sure
@@ -75,12 +71,12 @@ prepare_liferay_portal_properties() {
 
   echo "Portal properties (portal-ext.properties) file found."
 
-  cp -r $LIFERAY_CONFIG_DIR/portal-ext.properties $LIFERAY_HOME/portal-ext.properties
+  cp -r $LIFERAY_TEMPORAL_DIR/portal-ext.properties $LIFERAY_HOME/portal-ext.properties
 
   echo " Continuing."
 }
 
-prepare_liferay_tomcat_config() {
+function prepare_liferay_tomcat_config() {
   
   echo "Configuring Tomcat server.xml ..."
 
@@ -95,14 +91,35 @@ prepare_liferay_tomcat_config() {
   echo "Continuing."
 }
 
-run_portal() {
+
+function prepare_liferay_persistent_data_dirs() {
+  
+  echo "Checking Liferay data dirs ..."
+
+  if [[ ! -f "$LIFERAY_HOME/data/hypersonic" ]]; then
+    echo "No data in $LIFERAY_HOME/data'  found. Iniitalitzating data..." 
+    rsync -a --ignore-existing /tmp/data/* $LIFERAY_HOME/data/
+  fi
+
+  if [[ ! -f "$LIFERAY_HOME/osgi/hypersonic" ]]; then
+    echo "No data in $LIFERAY_HOME/osgi'  found. Iniitalitzating osgi..." 
+    rsync -a --ignore-existing /tmp/osgi/* $LIFERAY_HOME/osgi/
+  fi
+
+  if [[ ! -f "$LIFERAY_HOME/tomcat-9.0.6/" ]]; then
+    echo "No data in $LIFERAY_HOME/tomcat-9.0.6'  found. Iniitalitzating data..." 
+    rsync -a --ignore-existing /tmp/tomcat-9.0.6/* $LIFERAY_HOME/tomcat-9.0.6/
+  fi
+
+}
+
+function run_portal() {
   set -e
   cd $CATALINA_HOME
   ./bin/catalina.sh run
 }
 
 main "$@"
-
 
 
 
