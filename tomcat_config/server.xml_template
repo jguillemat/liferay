@@ -48,7 +48,7 @@
           testWhileIdle="true"
           testOnBorrow="true"
           testOnReturn="false"
-          validationQuery="SELECT 1 FROM DUAL"
+          validationQuery="select 1"
           validationInterval="30000"
           timeBetweenEvictionRunsMillis="30000"
           maxActive="100"
